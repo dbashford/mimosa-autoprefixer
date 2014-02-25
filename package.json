@@ -1,0 +1,33 @@
+{
+  "name": "mimosa-autoprefixer",
+  "version": "0.1.0",
+  "homepage": "https://github.com/dbashford/mimosa-autoprefixer",
+  "author": "David Bashford",
+  "description": "An autoprefixer module for Mimosa",
+  "contributors": [
+    {
+      "name": "David Bashford",
+      "email": "dbashford@hotmail.com"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dbashford/mimosa-autoprefixer"
+  },
+  "keywords": [
+    "mimosa",
+    "mmodule",
+    "autoprefix",
+    "vendor",
+    "prefix",
+    "css"
+  ],
+  "dependencies": {
+    "autoprefixer": "1.1.20140222"
+  },
+  "main": "./src/index",
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.10"
+  }
+}

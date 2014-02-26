@@ -10,14 +10,15 @@ var _process = function ( mimosaConfig, options, next ) {
 
     options.files.forEach( function( file ) {
       var opts = {
-        map: !mimosaConfig.isBuild,
-        inlineMap: false
+        map: mimosaConfig.autoprefixer.map,
+        inlineMap: false,
+        mapAnnotation: false
       };
 
       var result = autoprefixer.process( file.outputFileText, opts );
       var css = result.css;
 
-      if ( !mimosaConfig.isBuild ) {
+      if ( mimosaConfig.autoprefixer.map ) {
         var sourceMap = JSON.parse( result.map );
         sourceMap.sourceRoot = "";
         sourceMap.sources[0] = file.inputFileName;

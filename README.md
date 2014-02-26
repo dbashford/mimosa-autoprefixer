@@ -24,11 +24,13 @@ This module will run autoprefixer over your CSS during `mimosa watch` and `mimos
 ```javascript
 autoprefixer: {
   browsers:[ "> 1%", "last 2 versions", "Firefox ESR", "Opera 12.1" ],
+  map: true,
   cascade: true
 }
 ```
 
 * `browsers`: list of browsers to use, see the info on [browsers](https://github.com/ai/autoprefixer#browsers) on the autoprefixer github. The defalut here is the autoprefixer default.
+* `map`: whether or not to create inline maps, maps and source are always inlined
 * `cascade`: make output look like this
 ```
 a {

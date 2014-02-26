@@ -10,12 +10,25 @@ var _process = function ( mimosaConfig, options, next ) {
 
     options.files.forEach( function( file ) {
       var opts = {
-        inlineMap: mimosaConfig.autoprefixer.inlineMap,
-        from: path.basename( file.inputFileName ),
-        to: path.basename( file.outputFileName )
+        map: !mimosaConfig.isBuild,
+        inlineMap: false
       };
 
-      file.outputFileText = autoprefixer.process( file.outputFileText, opts );
+      var result = autoprefixer.process( file.outputFileText, opts );
+      var css = result.css;
+
+      if ( !mimosaConfig.isBuild ) {
+        var sourceMap = JSON.parse( result.map );
+        sourceMap.sourceRoot = "";
+        sourceMap.sources[0] = file.inputFileName;
+        sourceMap.sourcesContent = [file.outputFileText];
+        sourceMap.file = file.outputFileName;
+        var base64SourceMap = new Buffer( JSON.stringify( sourceMap ) ).toString( "base64" );
+        var datauri = "data:application/json;base64," + base64SourceMap;
+        file.outputFileText = css + "\n/*# sourceMappingURL=" + datauri + " */\n";
+      } else {
+        file.outputFileText = css;
+      }
     });
   }
 

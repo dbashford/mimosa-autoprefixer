@@ -29,7 +29,7 @@ autoprefixer: {
 }
 ```
 
-* `browsers`: list of browsers to use, see the info on [browsers](https://github.com/ai/autoprefixer#browsers) on the autoprefixer github. The defalut here is the autoprefixer default.
+* `browsers`: list of browsers to use, see the info on [browsers](https://github.com/ai/autoprefixer#browsers) on the autoprefixer github. The default here is the autoprefixer default.
 * `map`: whether or not to create inline maps, maps and source are always inlined
 * `cascade`: make output look like this
 ```

@@ -1,35 +1,23 @@
 "use strict";
 
-var path = require( "path" )
-  , prefixerLib = require( "autoprefixer" )
-  , config = require( "./config" )
+var config = require( "./config" )
   , autoprefixer;
 
 var _process = function ( mimosaConfig, options, next ) {
   if ( options.files && options.files.length ) {
-
     options.files.forEach( function( file ) {
+      if ( !file.outputFileText ) {
+        return;
+      }
+
       var opts = {
         map: mimosaConfig.autoprefixer.map,
-        inlineMap: false,
-        mapAnnotation: false
+        from: file.inputFileName,
+        to: file.outputFileName
       };
 
       var result = autoprefixer.process( file.outputFileText, opts );
-      var css = result.css;
-
-      if ( mimosaConfig.autoprefixer.map ) {
-        var sourceMap = JSON.parse( result.map );
-        sourceMap.sourceRoot = "";
-        sourceMap.sources[0] = file.inputFileName;
-        sourceMap.sourcesContent = [file.outputFileText];
-        sourceMap.file = file.outputFileName;
-        var base64SourceMap = new Buffer( JSON.stringify( sourceMap ) ).toString( "base64" );
-        var datauri = "data:application/json;base64," + base64SourceMap;
-        file.outputFileText = css + "\n/*# sourceMappingURL=" + datauri + " */\n";
-      } else {
-        file.outputFileText = css;
-      }
+      file.outputFileText = result.css;
     });
   }
 
@@ -37,8 +25,23 @@ var _process = function ( mimosaConfig, options, next ) {
 };
 
 var registration = function ( config, register ) {
+  var prefixerLib = require( "autoprefixer" )
+    , _ = require( "lodash" );
+
   autoprefixer = prefixerLib( config.autoprefixer.browsers , { cascade: config.autoprefixer.cascade } );
-  register( [ "add", "update", "buildExtension", "buildFile"], "beforeWrite", _process, config.extensions.css );
+
+  register(
+    [ "add", "update", "buildFile"],
+    "betweenCompileWrite",
+    _process,
+    ["css"] );
+
+  register(
+    [ "add", "update", "buildExtension"],
+    "betweenCompileWrite",
+    _process,
+    _.without( config.extensions.css, "css" ) );
+
 };
 
 module.exports = {

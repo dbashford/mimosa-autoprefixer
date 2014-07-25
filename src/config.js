@@ -5,17 +5,22 @@ exports.defaults = function() {
     autoprefixer: {
       browsers:[ "> 1%", "last 2 versions", "Firefox ESR", "Opera 12.1" ],
       cascade: true,
-      map: true
+      map: {
+        inline: true,
+        annotation: true,
+        sourcesContent: true
+      }
     }
   };
 };
 
 exports.placeholder = function() {
-  var ph = "  autoprefixer:            # settings for autoprefixer module\n" +
-     "    browsers:[]            # list of browsers to use, see the info on at\n" +
-     "                           # https://github.com/ai/autoprefixer#browsers\n" +
-     "    map: true              # whether or not to create inline maps, maps and source are always inlined\n" +
-     "    cascade: true          # path to directory where any additional custom eshint rules exist\n";
+  var ph = "  autoprefixer:             # settings for autoprefixer module\n" +
+     "    browsers:[]             # list of browsers to use, see the info on at\n" +
+     "                            # https://github.com/ai/autoprefixer#browsers\n" +
+     "    cascade: true           # whether to create nice visual cascade of prefixes\n" +
+     "    map: true               # set to false if you do not wish to have source maps\n";
+     
   return ph;
 };
 

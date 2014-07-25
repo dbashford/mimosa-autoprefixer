@@ -1,6 +1,6 @@
 {
   "name": "mimosa-autoprefixer",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "homepage": "https://github.com/dbashford/mimosa-autoprefixer",
   "author": "David Bashford",
   "description": "An autoprefixer module for Mimosa",
@@ -23,7 +23,8 @@
     "css"
   ],
   "dependencies": {
-    "autoprefixer": "1.1.20140222"
+    "autoprefixer": "2.1.1",
+    "lodash": "2.4.1"
   },
   "main": "./src/index",
   "license": "MIT",
